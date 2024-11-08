@@ -14,4 +14,5 @@
 #---------------------------------- Content ---------------------------------#
 /importer:TextureImporter
 /processor:TextureProcessor
-/build:ball.png
+/build:cooper1.png
+/build:cooper2.png

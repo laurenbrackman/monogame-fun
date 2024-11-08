@@ -32,7 +32,7 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // TODO: use this.Content to load your game content here
-        ballTexture = Content.Load<Texture2D>("ball");
+        ballTexture = Content.Load<Texture2D>("cooper1");
     }
 
     protected override void Update(GameTime gameTime)
