@@ -1,0 +1,26 @@
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/Video Game
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/Video Game.deps.json
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/Video Game.runtimeconfig.json
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/Video Game.dll
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/Video Game.pdb
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/MonoGame.Framework.dll
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/NVorbis.dll
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/runtimes/linux-x64/native/libopenal.so.1
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/runtimes/osx/native/libopenal.1.dylib
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/runtimes/win-x64/native/soft_oal.dll
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/runtimes/win-x86/native/soft_oal.dll
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/runtimes/linux-x64/native/libSDL2-2.0.so.0
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/runtimes/osx/native/libSDL2.dylib
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/runtimes/win-x64/native/SDL2.dll
+/Users/laurenhelbling/Documents/Video Game/obj/Debug/net8.0/Video Game.csproj.AssemblyReference.cache
+/Users/laurenhelbling/Documents/Video Game/obj/Debug/net8.0/Video Game.GeneratedMSBuildEditorConfig.editorconfig
+/Users/laurenhelbling/Documents/Video Game/obj/Debug/net8.0/Video Game.AssemblyInfoInputs.cache
+/Users/laurenhelbling/Documents/Video Game/obj/Debug/net8.0/Video Game.AssemblyInfo.cs
+/Users/laurenhelbling/Documents/Video Game/obj/Debug/net8.0/Video Game.csproj.CoreCompileInputs.cache
+/Users/laurenhelbling/Documents/Video Game/obj/Debug/net8.0/Video Game.csproj.Up2Date
+/Users/laurenhelbling/Documents/Video Game/obj/Debug/net8.0/Video Game.dll
+/Users/laurenhelbling/Documents/Video Game/obj/Debug/net8.0/refint/Video Game.dll
+/Users/laurenhelbling/Documents/Video Game/obj/Debug/net8.0/Video Game.pdb
+/Users/laurenhelbling/Documents/Video Game/obj/Debug/net8.0/Video Game.genruntimeconfig.cache
+/Users/laurenhelbling/Documents/Video Game/obj/Debug/net8.0/ref/Video Game.dll
+/Users/laurenhelbling/Documents/Video Game/bin/Debug/net8.0/Content/ball.xnb
