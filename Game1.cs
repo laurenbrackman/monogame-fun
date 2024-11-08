@@ -6,12 +6,15 @@ namespace Video_Game;
 
 public class Game1 : Game
 {
-    Texture2D ballTexture;
-    Vector2 ballPosition;
-    float ballSpeed;
+    Texture2D charaset;
+    Vector2 charPosition;
+    float charSpeed;
+    float timer;
+    int threshold;
+    Rectangle [] sourceRectangles;
+    byte currentAnimationIndex;
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -22,8 +25,8 @@ public class Game1 : Game
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
-        ballPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
-        ballSpeed = 100f;
+        charPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
+        charSpeed = 100f;
         base.Initialize();
     }
 
@@ -32,7 +35,13 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // TODO: use this.Content to load your game content here
-        ballTexture = Content.Load<Texture2D>("cooper1");
+        charaset = Content.Load<Texture2D>("cooper-spritesheet");
+        timer = 0;
+        threshold = 250;
+        sourceRectangles = new Rectangle[2];
+        sourceRectangles[0] = new Rectangle(0, 0, 40, 40);
+        sourceRectangles[1] = new Rectangle(0, 40, 40, 40);
+        currentAnimationIndex = 1;
     }
 
     protected override void Update(GameTime gameTime)
@@ -43,46 +52,60 @@ public class Game1 : Game
         // TODO: Add your update logic here
 
         // The time since Update was called last.
-        float updatedBallSpeed = ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        float updatedCharSpeed = charSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         var kstate = Keyboard.GetState();
         
         if (kstate.IsKeyDown(Keys.Up))
         {
-            ballPosition.Y -= updatedBallSpeed;
+            charPosition.Y -= updatedCharSpeed;
         }
         
         if (kstate.IsKeyDown(Keys.Down))
         {
-            ballPosition.Y += updatedBallSpeed;
+            charPosition.Y += updatedCharSpeed;
         }
         
         if (kstate.IsKeyDown(Keys.Left))
         {
-            ballPosition.X -= updatedBallSpeed;
+            charPosition.X -= updatedCharSpeed;
         }
         
         if (kstate.IsKeyDown(Keys.Right))
         {
-            ballPosition.X += updatedBallSpeed;
+            charPosition.X += updatedCharSpeed;
         }
 
-        if (ballPosition.X > _graphics.PreferredBackBufferWidth - ballTexture.Width / 2)
+        if (charPosition.X > _graphics.PreferredBackBufferWidth - charaset.Width / 2)
         {
-            ballPosition.X = _graphics.PreferredBackBufferWidth - ballTexture.Width / 2;
+            charPosition.X = _graphics.PreferredBackBufferWidth - charaset.Width / 2;
         }
-        else if (ballPosition.X < ballTexture.Width / 2)
+        else if (charPosition.X < charaset.Width / 2)
         {
-            ballPosition.X = ballTexture.Width / 2;
+            charPosition.X = charaset.Width / 2;
         }
 
-        if (ballPosition.Y > _graphics.PreferredBackBufferHeight - ballTexture.Height / 2)
+        if (charPosition.Y > _graphics.PreferredBackBufferHeight - charaset.Height / 2)
         {
-            ballPosition.Y = _graphics.PreferredBackBufferHeight - ballTexture.Height / 2;
+            charPosition.Y = _graphics.PreferredBackBufferHeight - charaset.Height / 2;
         }
-        else if (ballPosition.Y < ballTexture.Height / 2)
+        else if (charPosition.Y < charaset.Height / 2)
         {
-            ballPosition.Y = ballTexture.Height / 2;
+            charPosition.Y = charaset.Height / 2;
+        }
+
+        if (timer > threshold){
+            if (currentAnimationIndex == 0){
+                currentAnimationIndex = 1;
+            }
+            else{
+                currentAnimationIndex = 0;
+            }
+            timer=0;
+        }
+        else
+        {
+            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
         
         base.Update(gameTime);
@@ -94,13 +117,14 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin();
+        Rectangle sourceRectangle = new Rectangle(0, 40, 40, 40);
         _spriteBatch.Draw(
-            ballTexture,
-            ballPosition,
-            null,
+            charaset,
+            charPosition,
+            sourceRectangles[currentAnimationIndex],
             Color.White,
             0f,
-            new Vector2(ballTexture.Width / 2, ballTexture.Height / 2),
+            new Vector2(charaset.Width / 2, charaset.Height / 2),
             Vector2.One,
             SpriteEffects.None,
             0f
