@@ -14,6 +14,8 @@ public class Game1 : Game
     int threshold;
     Rectangle [] sourceRectangles;
     byte currentAnimationIndex;
+    private enum Direction { Up, Down, Left, Right, None };
+    private Direction lastDirection;
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     public Game1()
@@ -39,6 +41,7 @@ public class Game1 : Game
         charaset = Content.Load<Texture2D>("puppy-spritesheet");
         timer = 0;
         threshold = 200;
+        lastDirection = Direction.None;
 
         sourceRectangles = new Rectangle[15];
         for (int i = 0; i < 5; i++) {
@@ -49,10 +52,6 @@ public class Game1 : Game
 
         currentAnimationIndex = 0;
     }
-
-    // Enum to represent the direction
-private enum Direction { Up, Down, Left, Right, None };
-private Direction lastDirection = Direction.None;
 
 protected override void Update(GameTime gameTime)
 {
@@ -70,25 +69,24 @@ protected override void Update(GameTime gameTime)
     {
         charPosition.Y -= updatedCharSpeed;
         currentDirection = Direction.Up;
-        isMoving = true;
     }
     else if (kstate.IsKeyDown(Keys.Down))
     {
         charPosition.Y += updatedCharSpeed;
         currentDirection = Direction.Down;
-        isMoving = true;
     }
     else if (kstate.IsKeyDown(Keys.Left))
     {
         charPosition.X -= updatedCharSpeed;
         currentDirection = Direction.Left;
-        isMoving = true;
     }
     else if (kstate.IsKeyDown(Keys.Right))
     {
         charPosition.X += updatedCharSpeed;
         currentDirection = Direction.Right;
-        isMoving = true;
+    }
+    else{
+        currentDirection = Direction.None;
     }
 
     // Boundary checks
@@ -111,6 +109,7 @@ protected override void Update(GameTime gameTime)
                 case Direction.Down: currentAnimationIndex = 10; break;
                 case Direction.Left: currentAnimationIndex = 12; break;
                 case Direction.Right: currentAnimationIndex = 6; break;
+                case Direction.None: currentAnimationIndex = 0; break;
             }
             lastDirection = currentDirection; // Update last direction
         }
@@ -142,14 +141,8 @@ protected override void Update(GameTime gameTime)
                 }
                 timer = 0;
             }
-        timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
     
-    if(isMoving==false)
-    {
-        currentAnimationIndex = 0;
-        lastDirection = Direction.None; // Reset last direction
-        timer = 0; // Reset the timer when stationary
-    }
+    timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
     base.Update(gameTime);
 }
