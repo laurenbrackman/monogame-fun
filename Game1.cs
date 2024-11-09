@@ -149,7 +149,7 @@ protected override void Update(GameTime gameTime)
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.SeaGreen);
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin();
