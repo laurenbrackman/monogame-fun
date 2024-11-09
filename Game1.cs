@@ -35,12 +35,17 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // TODO: use this.Content to load your game content here
-        charaset = Content.Load<Texture2D>("cooper-spritesheet");
+        charaset = Content.Load<Texture2D>("puppy-spritesheet");
         timer = 0;
         threshold = 250;
-        sourceRectangles = new Rectangle[2];
-        sourceRectangles[0] = new Rectangle(0, 0, 40, 40);
-        sourceRectangles[1] = new Rectangle(0, 40, 40, 40);
+
+        sourceRectangles = new Rectangle[12];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 3; j++) {
+                sourceRectangles[i * 3 + j] = new Rectangle(j * 40, i * 40, 25, 25);
+            }
+        }
+
         currentAnimationIndex = 1;
     }
 
