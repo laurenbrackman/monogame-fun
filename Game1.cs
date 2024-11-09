@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -37,7 +38,7 @@ public class Game1 : Game
         // TODO: use this.Content to load your game content here
         charaset = Content.Load<Texture2D>("puppy-spritesheet");
         timer = 0;
-        threshold = 250;
+        threshold = 200;
 
         sourceRectangles = new Rectangle[15];
         for (int i = 0; i < 5; i++) {
@@ -46,7 +47,7 @@ public class Game1 : Game
             }
         }
 
-        currentAnimationIndex = 1;
+        currentAnimationIndex = 0;
     }
 
     // Enum to represent the direction
@@ -102,36 +103,34 @@ protected override void Update(GameTime gameTime)
         charPosition.Y = charaset.Height / 2;
 
     // Update animation only when moving and in the same direction
-    if (isMoving)
-    {
-        // Reset the starting frame if direction changed
-        if (currentDirection != lastDirection)
+    if (currentDirection != lastDirection)
         {
             switch (currentDirection)
             {
-                case Direction.Up: currentAnimationIndex = 2; break;
-                case Direction.Down: currentAnimationIndex = 9; break;
+                case Direction.Up: currentAnimationIndex = 3; break;
+                case Direction.Down: currentAnimationIndex = 10; break;
                 case Direction.Left: currentAnimationIndex = 12; break;
                 case Direction.Right: currentAnimationIndex = 6; break;
             }
             lastDirection = currentDirection; // Update last direction
         }
-        else
-        {
             // Only advance animation if timer exceeds the threshold
             if (timer > threshold)
             {
                 // Cycle through animation frames for each direction
                 switch (currentAnimationIndex)
                 {
-                    case 2: currentAnimationIndex = 3; break; // Up animation
-                    case 3: currentAnimationIndex = 4; break;
-                    case 4: currentAnimationIndex = 5; break;
-                    case 5: currentAnimationIndex = 2; break;
+                    case 0: currentAnimationIndex = 1; break;
+                    case 1: currentAnimationIndex = 0; break;
 
-                    case 9: currentAnimationIndex = 10; break; // Down animation
+                    case 2: currentAnimationIndex = 4; break; // Up animation
+                    case 3: currentAnimationIndex = 5; break;
+                    case 4: currentAnimationIndex = 2; break;
+                    case 5: currentAnimationIndex = 3; break;
+
+                    case 9: currentAnimationIndex = 9; break; // Down animation
                     case 10: currentAnimationIndex = 11; break;
-                    case 11: currentAnimationIndex = 9; break;
+                    case 11: currentAnimationIndex = 10; break;
 
                     case 12: currentAnimationIndex = 13; break; // Left animation
                     case 13: currentAnimationIndex = 12; break;
@@ -143,22 +142,11 @@ protected override void Update(GameTime gameTime)
                 }
                 timer = 0;
             }
-            else
-            {
-                timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            }
-        }
-    }
-    else
+        timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+    
+    if(isMoving==false)
     {
-        // Reset to standing frame when not moving
-        switch (currentDirection)
-        {
-            case Direction.Up: currentAnimationIndex = 2; break;
-            case Direction.Down: currentAnimationIndex = 9; break;
-            case Direction.Left: currentAnimationIndex = 14; break;
-            case Direction.Right: currentAnimationIndex = 8; break;
-        }
+        currentAnimationIndex = 0;
         lastDirection = Direction.None; // Reset last direction
         timer = 0; // Reset the timer when stationary
     }
