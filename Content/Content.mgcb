@@ -14,5 +14,5 @@
 #---------------------------------- Content ---------------------------------#
 /importer:TextureImporter
 /processor:TextureProcessor
-/build:cooper1.png
-/build:cooper2.png
+/build:puppy-spritesheet.png
+/build:slime-sheet.png
