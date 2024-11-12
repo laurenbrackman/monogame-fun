@@ -7,12 +7,14 @@ namespace Video_Game;
 
 public class Game1 : Game
 {
-    Texture2D charaset;
+    Texture2D puppy;
+    Texture2D slime;
     Vector2 charPosition;
     float charSpeed;
     float timer;
     int threshold;
-    Rectangle [] sourceRectangles;
+    Rectangle [] puppyRectangles;
+    Rectangle [] slimeRectangles;
     byte currentAnimationIndex;
     private enum Direction { Up, Down, Left, Right, None };
     private Direction lastDirection;
@@ -37,16 +39,23 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        // TODO: use this.Content to load your game content here
-        charaset = Content.Load<Texture2D>("puppy-spritesheet");
+        slime = Content.Load<Texture2D>("slime-sheet");
+        puppy = Content.Load<Texture2D>("puppy-spritesheet");
         timer = 0;
         threshold = 200;
         lastDirection = Direction.None;
 
-        sourceRectangles = new Rectangle[15];
+        puppyRectangles = new Rectangle[15];
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 3; j++) {
-                sourceRectangles[i * 3 + j] = new Rectangle(j * 40, i * 40, 38, 38);
+                puppyRectangles[i * 3 + j] = new Rectangle(j * 40, i * 40, 38, 38);
+            }
+        }
+
+        slimeRectangles = new Rectangle[15];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 3; j++) {
+                slimeRectangles[i * 3 + j] = new Rectangle(j * 50, i * 50, 50, 50);
             }
         }
 
@@ -61,8 +70,7 @@ protected override void Update(GameTime gameTime)
 
     float updatedCharSpeed = charSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
     var kstate = Keyboard.GetState();
-    bool isMoving = false;
-    Direction currentDirection = Direction.None;
+    Direction currentDirection;
 
     // Check movement input and set the current direction
     if (kstate.IsKeyDown(Keys.Up))
@@ -90,15 +98,15 @@ protected override void Update(GameTime gameTime)
     }
 
     // Boundary checks
-    if (charPosition.X > _graphics.PreferredBackBufferWidth - charaset.Width / 2)
-        charPosition.X = _graphics.PreferredBackBufferWidth - charaset.Width / 2;
-    else if (charPosition.X < charaset.Width / 2)
-        charPosition.X = charaset.Width / 2;
+    if (charPosition.X > _graphics.PreferredBackBufferWidth - puppy.Width / 2)
+        charPosition.X = _graphics.PreferredBackBufferWidth - puppy.Width / 2;
+    else if (charPosition.X < puppy.Width / 2)
+        charPosition.X = puppy.Width / 2;
 
-    if (charPosition.Y > _graphics.PreferredBackBufferHeight - charaset.Height / 2)
-        charPosition.Y = _graphics.PreferredBackBufferHeight - charaset.Height / 2;
-    else if (charPosition.Y < charaset.Height / 2)
-        charPosition.Y = charaset.Height / 2;
+    if (charPosition.Y > _graphics.PreferredBackBufferHeight - (puppy.Height/2))
+        charPosition.Y = _graphics.PreferredBackBufferHeight - (puppy.Height/2);
+    else if (charPosition.Y < (puppy.Height / 2))
+        charPosition.Y = puppy.Height / 2;
 
     // Update animation only when moving and in the same direction
     if (currentDirection != lastDirection)
@@ -151,16 +159,14 @@ protected override void Update(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.SeaGreen);
 
-        // TODO: Add your drawing code here
         _spriteBatch.Begin();
-        Rectangle sourceRectangle = new Rectangle(0, 40, 40, 40);
         _spriteBatch.Draw(
-            charaset,
+            puppy,
             charPosition,
-            sourceRectangles[currentAnimationIndex],
+            puppyRectangles[currentAnimationIndex],
             Color.White,
             0f,
-            new Vector2(charaset.Width / 2, charaset.Height / 2),
+            new Vector2(puppy.Width / 2, puppy.Height / 2),
             Vector2.One,
             SpriteEffects.None,
             0f
