@@ -31,6 +31,9 @@ public class Game1 : Game
         slimeTexture = new AnimatedTexture(Vector2.Zero, rotation, scale, depth, 50);
         dogDownTexture = new AnimatedTexture(new Vector2(40, 120), rotation,scale, depth, 40);
         dogSittingTexture = new AnimatedTexture(Vector2.Zero, rotation,scale,depth,40);
+        dogUpTexture = new AnimatedTexture(new Vector2(0, 40), rotation,scale, depth, 40);
+        dogLeftTexture = new AnimatedTexture(new Vector2(0, 160), rotation,scale, depth, 40);
+        dogRightTexture = new AnimatedTexture(new Vector2(0, 80), rotation,scale, depth, 40);
     }
 
     protected override void Initialize()
@@ -48,6 +51,9 @@ public class Game1 : Game
         slimeTexture.Load(Content, "slime-sheet", 3, framesPerSec);
         dogSittingTexture.Load(Content, "puppy-spritesheet", 2, framesPerSec);
         dogDownTexture.Load(Content, "puppy-spritesheet", 2, framesPerSec);
+        dogUpTexture.Load(Content, "puppy-spritesheet", 3, framesPerSec);
+        dogLeftTexture.Load(Content, "puppy-spritesheet", 2, framesPerSec);
+        dogRightTexture.Load(Content, "puppy-spritesheet", 2, framesPerSec);
         viewport = _graphics.GraphicsDevice.Viewport;
     }
 
@@ -93,6 +99,12 @@ protected override void Update(GameTime gameTime)
     switch(currentDirection){
         case Direction.Down:
             dogTexture = dogDownTexture; break;
+        case Direction.Up:
+            dogTexture = dogUpTexture; break;
+        case Direction.Left:
+            dogTexture = dogLeftTexture; break;
+        case Direction.Right:
+            dogTexture = dogRightTexture; break;
         default:
             dogTexture = dogSittingTexture; break;
     }
