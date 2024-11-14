@@ -22,17 +22,16 @@ public class Game1 : Game
     private Viewport viewport;
     private const int framesPerSec = 3;
     float dogSpeed;
-
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
         slimeTexture = new AnimatedTexture(Vector2.Zero, rotation, scale, depth, 50);
-        dogDownTexture = new AnimatedTexture(new Vector2(40, 120), rotation,scale, depth, 40);
         dogSittingTexture = new AnimatedTexture(Vector2.Zero, rotation,scale,depth,40);
         dogUpTexture = new AnimatedTexture(new Vector2(0, 40), rotation,scale, depth, 40);
-        dogLeftTexture = new AnimatedTexture(new Vector2(0, 160), rotation,scale, depth, 40);
+        dogDownTexture = new AnimatedTexture(new Vector2(0, 120), rotation,scale, depth, 40);
+        dogLeftTexture = new AnimatedTexture(new Vector2(80, 80), rotation,scale, depth, 40);
         dogRightTexture = new AnimatedTexture(new Vector2(0, 80), rotation,scale, depth, 40);
     }
 
@@ -49,11 +48,11 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         slimeTexture.Load(Content, "slime-sheet", 3, framesPerSec);
-        dogSittingTexture.Load(Content, "puppy-spritesheet", 2, framesPerSec);
-        dogDownTexture.Load(Content, "puppy-spritesheet", 2, framesPerSec);
-        dogUpTexture.Load(Content, "puppy-spritesheet", 3, framesPerSec);
-        dogLeftTexture.Load(Content, "puppy-spritesheet", 2, framesPerSec);
-        dogRightTexture.Load(Content, "puppy-spritesheet", 2, framesPerSec);
+        dogSittingTexture.Load(Content, "puppy-sheet-2", 2, framesPerSec);
+        dogDownTexture.Load(Content, "puppy-sheet-2", 4, framesPerSec);
+        dogUpTexture.Load(Content, "puppy-sheet-2", 4, framesPerSec);
+        dogLeftTexture.Load(Content, "puppy-sheet-2", 2, framesPerSec);
+        dogRightTexture.Load(Content, "puppy-sheet-2", 2, framesPerSec);
         viewport = _graphics.GraphicsDevice.Viewport;
     }
 
@@ -108,7 +107,24 @@ protected override void Update(GameTime gameTime)
         default:
             dogTexture = dogSittingTexture; break;
     }
-        
+
+    if (dogPosition.X > _graphics.PreferredBackBufferWidth - dogTexture.Height / 2)
+    {
+        dogPosition.X = _graphics.PreferredBackBufferWidth - dogTexture.Height / 2;
+    }
+    else if (dogPosition.X < dogTexture.Height / 2)
+    {
+        dogPosition.X = dogTexture.Height / 2;
+    }
+
+    if (dogPosition.Y > _graphics.PreferredBackBufferHeight - dogTexture.Height / 2)
+    {
+        dogPosition.Y = _graphics.PreferredBackBufferHeight - dogTexture.Height / 2;
+    }
+    else if (dogPosition.Y < dogTexture.Height / 2)
+    {
+        dogPosition.Y = dogTexture.Height / 2;
+    }
 
     base.Update(gameTime);
 }
