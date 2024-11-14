@@ -27,11 +27,12 @@ public class AnimatedTexture
     public int Height;
     
     // The origin point of the animated texture.
-    public Vector2 Origin;
+    public Vector2 Origin, Offset;
 
-    public AnimatedTexture(Vector2 origin, float rotation, float scale, float depth, int height)
+    public AnimatedTexture(Vector2 offset, float rotation, float scale, float depth, int height)
     {
-        this.Origin = origin;
+        this.Offset = offset;
+        this.Origin = Vector2.Zero;
         this.Rotation = rotation;
         this.Scale = scale;
         this.Depth = depth;
@@ -71,8 +72,10 @@ public class AnimatedTexture
     {
         int FrameWidth = Height;
         int FrameHeight = Height;
-        Rectangle sourcerect = new Rectangle(FrameWidth * frame, 0,
-            FrameWidth, FrameHeight);
+        int XOffset = (int)Offset.X;
+        int YOffset = (int)Offset.Y;
+        Rectangle sourcerect = new Rectangle(FrameWidth * frame + XOffset, YOffset,
+            FrameWidth - 2, FrameHeight -  1);
         batch.Draw(myTexture, screenPos, sourcerect, Color.White,
             Rotation, Origin, Scale, SpriteEffects.None, Depth);
     }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Net;
 using System.Reflection.Emit;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,12 +14,14 @@ public class Game1 : Game
     private enum Direction { Up, Down, Left, Right, None };
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    private AnimatedTexture slimeTexture, dogTexture;
+    private AnimatedTexture slimeTexture, dogDownTexture, dogSittingTexture, dogLeftTexture, dogRightTexture, dogUpTexture;
+    AnimatedTexture dogTexture;
     private const float rotation = 0;
     private const float scale = 1;
     private const float depth = 0.5f;
     private Viewport viewport;
     private const int framesPerSec = 3;
+    float dogSpeed;
 
     public Game1()
     {
@@ -25,13 +29,16 @@ public class Game1 : Game
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
         slimeTexture = new AnimatedTexture(Vector2.Zero, rotation, scale, depth, 50);
-        dogTexture = new AnimatedTexture(Vector2.Zero, rotation, scale, depth, 40);
+        dogDownTexture = new AnimatedTexture(new Vector2(40, 120), rotation,scale, depth, 40);
+        dogSittingTexture = new AnimatedTexture(Vector2.Zero, rotation,scale,depth,40);
     }
 
     protected override void Initialize()
     {
         slimePosition = new Vector2(100,100);
         dogPosition = new Vector2(200,200);
+        dogSpeed = 100f;
+        dogTexture = dogSittingTexture;
         base.Initialize();
     }
 
@@ -39,7 +46,8 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         slimeTexture.Load(Content, "slime-sheet", 3, framesPerSec);
-        dogTexture.Load(Content, "puppy-spritesheet", 2, framesPerSec);
+        dogSittingTexture.Load(Content, "puppy-spritesheet", 2, framesPerSec);
+        dogDownTexture.Load(Content, "puppy-spritesheet", 2, framesPerSec);
         viewport = _graphics.GraphicsDevice.Viewport;
     }
 
@@ -52,6 +60,43 @@ protected override void Update(GameTime gameTime)
     float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
     slimeTexture.UpdateFrame(elapsed);
     dogTexture.UpdateFrame(elapsed);
+    Direction currentDirection = Direction.None;
+
+    float updatedDogSpeed = dogSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+    var kstate = Keyboard.GetState();
+    
+    if (kstate.IsKeyDown(Keys.Up))
+    {
+        dogPosition.Y -= updatedDogSpeed;
+        currentDirection = Direction.Up;
+    }
+    
+    if (kstate.IsKeyDown(Keys.Down))
+    {
+        dogPosition.Y += updatedDogSpeed;
+        currentDirection = Direction.Down;
+    }
+    
+    if (kstate.IsKeyDown(Keys.Left))
+    {
+        dogPosition.X -= updatedDogSpeed;
+        currentDirection = Direction.Left;
+    }
+    
+    if (kstate.IsKeyDown(Keys.Right))
+    {
+        dogPosition.X += updatedDogSpeed;
+        currentDirection = Direction.Right;
+    }
+
+    switch(currentDirection){
+        case Direction.Down:
+            dogTexture = dogDownTexture; break;
+        default:
+            dogTexture = dogSittingTexture; break;
+    }
+        
 
     base.Update(gameTime);
 }
@@ -63,7 +108,6 @@ protected override void Update(GameTime gameTime)
         _spriteBatch.Begin();
        
         slimeTexture.DrawFrame(_spriteBatch, slimePosition);
-
         dogTexture.DrawFrame(_spriteBatch, dogPosition);
 
         _spriteBatch.End();
